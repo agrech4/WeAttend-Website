@@ -102,7 +102,7 @@
       $c = 0;
       if($line[17] == $USER_NET_ID) {
         foreach($line as $col) {
-          $classList[$i-1][$cols[$c]] = $col;
+          $CLASS_LIST[$i-1][$cols[$c]] = $col;
           $c++;
         }
         $i++;
