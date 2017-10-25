@@ -1,4 +1,6 @@
 <?php
+  error_reporting(E_ALL);
+  ini_set('display_errors', 1);
   // find name in uvm directory
   function ldapName($uvmID) {
     if (empty($uvmID)){
@@ -88,25 +90,24 @@
   $FILE_NAME = $PATH_PARTS['filename'];
   $classFile = fopen("http://giraffe.uvm.edu/~rgweb/batch/curr_enroll_fall.txt", "r") or die("Error opening file");
   $i = 0;
-  while(($line = fgetcsv($file)) !== FALSE) {
+  while(($line = fgetcsv($classFile)) !== FALSE) {
     if($i == 0) {
       $c = 0;
       foreach($line as $col) {
         $cols[$c] = $col;
         $c++;
       }
+      $i++;
     } else if($i > 0) {
       $c = 0;
-      foreach($line as $col) {
-        $fullClassList[$i][$cols[$c]] = $col;
-        $c++;
+      if($line[17] == $USER_NET_ID) {
+        foreach($line as $col) {
+          $classList[$i-1][$cols[$c]] = $col;
+          $c++;
+        }
+        $i++;
       }
     }
     $i++;
-  }
-  foreach ($fullClassList as $class) {
-    if ($class["NetId"] == $USER_NET_ID) {
-      $CLASS_LIST[] = $class;
-    }
   }
 ?>
