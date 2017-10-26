@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <?php
+  //test
     include 'header.php';
   ?>
   <body>
