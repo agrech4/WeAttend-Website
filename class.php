@@ -11,7 +11,7 @@
     <div class="container-fluid">
       <h1>
         <?php
-          $classKay = $_GET["cls"];
+          $classKey = $_GET["cls"];
           echo $CLASS_LIST[$classKey][' Subj'] . $CLASS_LIST[$classKey]['#'] . $CLASS_LIST[$classKey][' Sec'];
         ?>
       </h1>
