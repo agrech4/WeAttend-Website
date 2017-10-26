@@ -2,10 +2,10 @@
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="index.php">WeAttend</a>
+      <a class="navbar-brand" href="classList.php">WeAttend</a>
     </div>
     <ul class="nav navbar-nav">
-      <li <?php if($FILE_NAME == 'index'){echo ' class="active"';}?>><a href="index.php">Home</a></li>
+      <li <?php if($FILE_NAME == 'classList'){echo ' class="active"';}?>><a href="classList.php">Class List</a></li>
       <li <?php if($FILE_NAME == 'class'){echo ' class="dropdown active"';}else{echo ' class="dropdown"';}?>><a class="dropdown-toggle" data-toggle="dropdown" href="#">My Classes<span class="caret"></span></a>
         <ul class="dropdown-menu">
           <?php
@@ -20,7 +20,7 @@
       <li <?php if($FILE_NAME == 'classList'){echo ' class="active"';}?>><a href="classList.php">Class List</a></li>
     </ul>
     <ul class="nav navbar-nav navbar-right">
-      <li><a href="#"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+      <li><a href="#"><span class="glyphicon glyphicon-log-out"></span>Logout</a></li>
     </ul>
     <p class="navbar-text navbar-right"><?php echo $USER_NET_ID;?></p>
   </div>
