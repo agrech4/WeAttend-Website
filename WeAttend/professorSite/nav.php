@@ -17,7 +17,6 @@
           ?>
         </ul>
       </li>
-      <li <?php if($FILE_NAME == 'classList'){echo ' class="active"';}?>><a href="classList.php">Class List</a></li>
     </ul>
     <ul class="nav navbar-nav navbar-right">
       <li><a href="#"><span class="glyphicon glyphicon-log-out"></span>Logout</a></li>
