@@ -9,11 +9,9 @@
       <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">My Classes<span class="caret"></span></a>
         <ul class="dropdown-menu">
           <?php
-            foreach($CLASS_LIST as $class) {
-              echo '<li><a href="#">';
-              echo $class[" Subj"];
-              echo ' ';
-              echo $class["#"];
+            foreach($CLASS_LIST as $key => $class) {
+              echo '<li><a href="class.php?cls=', urlencode($key), '">';
+              echo $class[" Subj"] . " " . $class["#"] . " " . $class["Sec"];
               echo '</a></li>';
             }
           ?>
