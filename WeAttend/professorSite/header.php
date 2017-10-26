@@ -12,7 +12,7 @@
     error_reporting(E_ALL);
     ini_set('display_errors', 1);
     print '<!-- begin including libraries -->';
-    include 'lib/constants.php';
+    include 'lib/pageConstants.php';
     print '<!-- libraries complete -->';
   ?>
 </head>
