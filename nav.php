@@ -19,11 +19,11 @@
           ?>
         </ul>
       </li>
-      <li><a href="#">Class List</a></li>
+      <li <?php if($FILE_NAME == 'classList'){echo ' class="active"';}?>><a href="classList.php">Class List</a></li>
     </ul>
     <ul class="nav navbar-nav navbar-right">
       <li><a href="#"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
     </ul>
-    <p class="navbar-text navbar-right">jdoe</p>
+    <p class="navbar-text navbar-right"><?php echo $USER_NET_ID;?></p>
   </div>
 </nav>
