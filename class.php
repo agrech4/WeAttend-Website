@@ -12,7 +12,7 @@
       <h1>
         <?php
           $classKey = $_GET["cls"];
-          echo $CLASS_LIST[$classKey][' Subj'] . $CLASS_LIST[$classKey]['#'] . $CLASS_LIST[$classKey][' Sec'];
+          echo $CLASS_LIST[$classKey][' Subj'] . ' ' . $CLASS_LIST[$classKey]['#'] . ' ' .$CLASS_LIST[$classKey]['Sec'];
         ?>
       </h1>
     </div>

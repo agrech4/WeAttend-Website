@@ -6,7 +6,7 @@
     </div>
     <ul class="nav navbar-nav">
       <li <?php if($FILE_NAME == 'index'){echo ' class="active"';}?>><a href="index.php">Home</a></li>
-      <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">My Classes<span class="caret"></span></a>
+      <li <?php if($FILE_NAME == 'class'){echo ' class="dropdown active"';}else{echo ' class="dropdown"';}?>><a class="dropdown-toggle" data-toggle="dropdown" href="#">My Classes<span class="caret"></span></a>
         <ul class="dropdown-menu">
           <?php
             foreach($CLASS_LIST as $key => $class) {
