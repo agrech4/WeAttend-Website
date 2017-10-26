@@ -25,10 +25,10 @@
           </thead>
           <tbody>
             <?php
-              foreach($CLASS_LIST as $class) {
+              foreach($CLASS_LIST as $key => $class) {
                 echo '<tr>';
                 //Class
-                echo '<td><a href="#">';
+                echo '<td><a href="class.php?cls=' . urlencode($key) . '">';
                 echo $class[" Subj"];
                 echo ' ';
                 echo $class["#"];

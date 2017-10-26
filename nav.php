@@ -10,10 +10,8 @@
         <ul class="dropdown-menu">
           <?php
             foreach($CLASS_LIST as $class) {
-              echo '<li><a href="#">';
-              echo $class[" Subj"];
-              echo ' ';
-              echo $class["#"];
+              echo '<li><a href="class.php?cls=' . urlencode($key) . '">';
+              echo $class[" Subj"] . " " . $class["#"] . " " . $class["Sec"];
               echo '</a></li>';
             }
           ?>
