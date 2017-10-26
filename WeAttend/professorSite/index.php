@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <?php
-  //test2
+  //test1
     include 'header.php';
   ?>
   <body>
