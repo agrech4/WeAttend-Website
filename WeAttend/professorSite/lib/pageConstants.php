@@ -81,8 +81,8 @@
     ldap_close($ds);
     return "Invalid"; // they were found
   }
-  $USER_NET_ID = htmlentities($_SERVER["REMOTE_USER"], ENT_QUOTES, "UTF-8");
-  //$USER_NET_ID = 'ceskalka';
+  //$USER_NET_ID = htmlentities($_SERVER["REMOTE_USER"], ENT_QUOTES, "UTF-8");
+  $USER_NET_ID = 'ceskalka';
   $USER_NAME = explode(":", ldapName($USER_NET_ID));
   $USER_STATUS = LDAPstatus($USER_NET_ID);
   define('PHP_SELF', htmlentities($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'));

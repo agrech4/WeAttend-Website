@@ -13,6 +13,7 @@
         <?php
           $classKey = $_GET["cls"];
           echo $CLASS_LIST[$classKey][' Subj'] . ' ' . $CLASS_LIST[$classKey]['#'] . ' ' .$CLASS_LIST[$classKey]['Sec'];
+          echo ini_get("file_uploads");
         ?>
       </h1>
     </div>
