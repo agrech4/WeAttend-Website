@@ -14,5 +14,10 @@
     print '<!-- begin including libraries -->';
     include 'lib/pageConstants.php';
     print '<!-- libraries complete -->';
+    if($USER_STATUS == 'Student'){
+      echo '</head>';
+      echo '<body> This page is for teachers only </body>';
+      exit;
+    }
   ?>
 </head>
