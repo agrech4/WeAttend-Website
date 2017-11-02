@@ -1,6 +1,6 @@
 <?php
 
-/* 
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -18,7 +18,7 @@ $classList = array();
 $query = "SELECT tblCourse.fldClassSubject, tblCourse.fldCourseNum, tblSections.fldSection, "
         . "tblSections.fldStart, tblSections.fldEnd, tblSections.fldDays "
         . "FROM tblCourse JOIN tblSections ON tblCourse.pmkCourseId = tblSections.fnkCourseId "
-        . "WHERE tblSections.fldTearcherNetId = ?";
+        . "WHERE tblSections.fldTeacherNetId = ?";
 $parameters = array($netId);
 
 if ($thisDatabaseReader->querySecurityOk($query, 1, 0, 0, 0, 0)) {
