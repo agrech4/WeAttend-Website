@@ -16,7 +16,7 @@
     print '<!-- libraries complete -->';
     if($USER_STATUS == 'Student'){
       echo '</head>';
-      echo '<body> This page is for teachers only </body>';
+      echo '<body> This site is for teachers only </body>';
       exit;
     }
   ?>
