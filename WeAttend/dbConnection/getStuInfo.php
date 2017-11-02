@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * Author: Neal Zhu (zxykit@gmail.com)
+ * This file will take a netID as input and check if the netID belong to UVM student. 
+ * if the netId belong to a student, it will output this student's name, and class list
+*/
+
+
 // get student/faculty status of netid
 function LDAPstatus($uvmID) {
     error_reporting(0);
