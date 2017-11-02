@@ -15,14 +15,31 @@
           echo $CLASS_LIST[$classKey][' Subj'] . ' ' . $CLASS_LIST[$classKey]['#'] . ' ' .$CLASS_LIST[$classKey]['Sec'];
         ?>
       </h1>
-      <form action="upload.php" method="post" enctype="multipart/form-data">
-        Select CSV to upload:
-        <input type="file" name="fileToUpload" id="fileToUpload">
-        <input type="submit" value="Upload File" name="submit">
-      </form>
-      <p>
-
-      </p>
+      <div class="row">
+        <div class="col-sm-6">
+          <form action="upload.php" method="post" enctype="multipart/form-data">
+            <h3>Upload Student Roster:</h3>
+            <div class="container-fluid">
+              <div class="input-group">
+                <label class="input-group-btn">
+                  <span class="btn btn-primary">
+                    Browse&hellip; <input type="file" style="display:none;" onchange="$('#upload-file-info').val($(this).val());">
+                  </span>
+                </label>
+                <input type="text" class="form-control" id="upload-file-info" readonly>
+              </div>
+              <span class="help-block">
+                Only .csv or .txt files
+              </span>
+              <div class="input-group">
+                <label class="btn btn-lg btn-primary">
+                  Submit<input type="submit" style="display:none;">
+                </label>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
   </body>
 </html
