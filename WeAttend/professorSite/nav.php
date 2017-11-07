@@ -18,9 +18,6 @@
         </ul>
       </li>
     </ul>
-    <ul class="nav navbar-nav navbar-right">
-      <li><a href="#"><span class="glyphicon glyphicon-log-out"></span>Logout</a></li>
-    </ul>
-    <p class="navbar-text navbar-right"><?php echo $USER_NET_ID;?></p>
+    <p class="navbar-right navbar-text"><?php echo $USER_NET_ID;?> &nbsp&nbsp</p>
   </div>
 </nav>
