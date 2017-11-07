@@ -12,7 +12,8 @@
     error_reporting(E_ALL);
     ini_set('display_errors', 1);
     print '<!-- begin including libraries -->';
-    include 'lib/pageConstants.php';
+    include 'lib/constants.php';
+    include LIB_PATH . '/getUserInfo.php';
     print '<!-- libraries complete -->';
     if($USER_STATUS == 'Student'){
       echo '</head>';

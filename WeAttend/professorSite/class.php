@@ -11,13 +11,13 @@
     <div class="container-fluid">
       <h1>
         <?php
-          $classKey = $_GET["cls"];
-          echo $CLASS_LIST[$classKey][' Subj'] . ' ' . $CLASS_LIST[$classKey]['#'] . ' ' .$CLASS_LIST[$classKey]['Sec'];
+          $sectionKey = $_GET["sectionId"];
+          echo $CLASS_LIST[$sectionKey]['fldClassSubject'] . ' ' . sprintf("%'.03d",$CLASS_LIST[$sectionKey]['fldCourseNum']) . ' ' .$CLASS_LIST[$sectionKey]['fldSection'];
         ?>
       </h1>
       <div class="row">
         <div class="col-sm-6">
-          <form action="upload.php" method="post" enctype="multipart/form-data">
+          <form action=<?php echo '"upload.php?sectionId=', urlencode($sectionKey), '"'?> method="post" enctype="multipart/form-data">
             <h3>Upload Student Roster:</h3>
             <div class="container-fluid">
               <div class="input-group">

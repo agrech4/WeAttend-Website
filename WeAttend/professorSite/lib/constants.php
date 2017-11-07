@@ -27,6 +27,8 @@ define ('PHP_SELF', htmlentities($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'));
 
 $PATH_PARTS = pathinfo(PHP_SELF);
 
+define ('FILE_NAME', $PATH_PARTS['filename']);
+
 define ('BASE_PATH', DOMAIN . $PATH_PARTS['dirname'] . '/');
 
 // sometimes you want to know where www-root is located in relation to where you

@@ -11,8 +11,6 @@
           <thead>
             <tr>
               <th>Class</th>
-              <th>Title</th>
-              <th>Current Enrolled</th>
               <th>Time</th>
               <th>Days</th>
               <th>Building</th>
@@ -21,44 +19,33 @@
           </thead>
           <tbody>
             <?php
-            
-            
-            
-              foreach($CLASS_LIST as $key => $class) {
+              foreach($CLASS_LIST as $class) {
                 echo '<tr>';
                 //Class
-                echo '<td><a href="class.php?cls=', urlencode($key), '">';
-                echo $class[" Subj"];
+                echo '<td><a href="class.php?sectionId=', urlencode($class["pmkSectionId"]), '">';
+                echo $class["fldClassSubject"];
                 echo ' ';
-                echo $class["#"];
+                echo sprintf("%'.03d",$class["fldCourseNum"]);
                 echo ' ';
-                echo $class["Sec"];
+                echo $class["fldSection"];
                 echo '</a></td>';
-                //Title
-                echo '<td>';
-                echo $class["Title"];
-                echo '</td>';
-                //Current Enrolled
-                echo '<td>';
-                echo $class["Current Enrollment"];
-                echo '</td>';
                 //Time
                 echo '<td>';
-                echo $class["Start Time"];
+                echo date('G:i',strtotime($class["fldStart"]));
                 echo '-';
-                echo $class["End Time"];
+                echo date('G:i',strtotime($class["fldEnd"]));
                 echo '</td>';
                 //Days
                 echo '<td>';
-                echo $class["Days"];
+                echo $class["fldDays"];
                 echo '</td>';
                 //Building
                 echo '<td>';
-                echo $class["Bldg"];
+                echo $class["fldBuildingArea"];
                 echo '</td>';
                 //Room
                 echo '<td>';
-                echo $class["Room"];
+                echo $class["fldRoom"];
                 echo '</td>';
                 echo '</tr>';
               }
