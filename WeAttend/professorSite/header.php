@@ -13,6 +13,12 @@
     ini_set('display_errors', 1);
     print '<!-- begin including libraries -->';
     include 'lib/constants.php';
+    include LIB_PATH . '/getUserInfo.php';
     print '<!-- libraries complete -->';
+    if($USER_STATUS == 'Student'){
+      echo '</head>';
+      echo '<body> This site is for teachers only </body>';
+      exit;
+    }
   ?>
 </head>
