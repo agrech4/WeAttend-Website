@@ -1,7 +1,7 @@
 <?php
 
-include 'header.php';
-include 'nav.php';
+include '../header.php';
+include '../nav.php';
 
 //setup database connection
 include '../lib/constants.php';
@@ -30,7 +30,7 @@ if (isset($_POST["submit"]) and isset($_GET['sectionId'])) {
             $netIDarray[] = $getData[$netidCol];
         }
 
-        $insertQuery = "INSERT INTO tblStudentSection (fnkSectionId, fldStuNetId) 
+        $insertQuery = "INSERT INTO tblStudentSection (fnkSectionId, fldStuNetId)
                    VALUES ";
         $netIdSize = sizeof($netIDarray);
         for ($i = 0; $i < $netIdSize; $i++) {
@@ -65,4 +65,3 @@ $parameter = array();
         fclose($file);
     }
 }
-    
