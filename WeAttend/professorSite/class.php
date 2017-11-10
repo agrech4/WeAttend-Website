@@ -13,10 +13,20 @@
         <?php
           $sectionKey = $_GET["sectionId"];
           echo $CLASS_LIST[$sectionKey]['fldClassSubject'] . ' ' . sprintf("%'.03d",$CLASS_LIST[$sectionKey]['fldCourseNum']) . ' ' .$CLASS_LIST[$sectionKey]['fldSection'];
+          if ($CLASS_LIST[$sectionKey]['fldTakeAttendance'] == 0) {
+            echo '</h1>';
+            echo '<h2>You are not currently taking attendance for this class</h2>';
+            echo '<form "form-inline" action="scripts/toggleAttendance.php?sectionId='
+                  . urlencode($sectionKey). '&turn=on" method="POST"><h3>Start Taking Attendance:</h3>'
+                  . '<button class="btn btn-primary" name="submit" type="submit">Submit</button>'
+                  . '</form>';
+            exit;
+          }
+
         ?>
       </h1>
       <!--Manual Attendence Form -->
-      <form class="form-inline" action=<?php echo '"scripts/addManualAttendance.php?sectionId=', urlencode($sectionKey), '"'?> method="post">
+      <form class="form-inline" action=<?php echo '"scripts/addManualAttendance.php?sectionId='. urlencode($sectionKey). '"'?> method="POST">
         <h3>Manually Add Attendence</h3>
         <div class="input-group">
           <span class="input-group-addon">Student NetID:</span>
@@ -49,6 +59,11 @@
           </label>
         </div>
         <span class="help-block">Only .csv or .txt files</span>
+      </form>
+      <!--Turn attendance off-->
+      <form "form-inline" action=<?php echo '"scripts/toggleAttendance.php?sectionId='. urlencode($sectionKey). '&turn=off"'?> method="POST">
+        <h3>Stop Taking Attendance:</h3>
+        <button class="btn btn-primary" name="submit" type="submit">Submit</button>
       </form>
     </div>
   </body>
