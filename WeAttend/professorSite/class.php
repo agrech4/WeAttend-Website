@@ -61,7 +61,7 @@
         <span class="help-block">Only .csv or .txt files</span>
       </form>
       <!--Turn attendance off-->
-      <form "form-inline" action=<?php echo '"scripts/toggleAttendance.php?sectionId='. urlencode($sectionKey). '&turn=off"'?> method="POST">
+      <form "form-inline" action=<?php echo '"scripts/toggleAttendance.php?sectionId='. urlencode($sectionKey) . '&turn=off"'?> method="POST">
         <h3>Stop Taking Attendance:</h3>
         <button class="btn btn-primary" name="submit" type="submit">Submit</button>
       </form>
