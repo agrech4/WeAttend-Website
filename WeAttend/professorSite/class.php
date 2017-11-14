@@ -25,6 +25,17 @@
 
         ?>
       </h1>
+      <!--Get Attendence Form-->
+      <form class="form-inline" action=<?php echo '"scripts/getAttendance.php?sectionId='. urlencode($sectionId). '"'?> method="POST">
+        <h3>Attendance:</h3>
+        <div class="input-group">
+          <span class="input-group-addon">Date:</span>
+          <input type="date" name="attendanceDate" class="form-control">
+          <div class="input-group-btn">
+            <button class="btn btn-primary" name="submitAttend" type="submit">Submit</button>
+          </div>
+        </div>
+      </form>
       <!--Manual Attendence Form -->
       <form class="form-inline" action=<?php echo '"scripts/addManualAttendance.php?sectionId='. urlencode($sectionKey). '"'?> method="POST">
         <h3>Manually Add Attendence</h3>
