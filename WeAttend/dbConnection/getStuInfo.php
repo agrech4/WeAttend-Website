@@ -101,7 +101,7 @@ if (!empty($netId) && LDAPstatus($netId) == "Student") {
         $records = $thisDatabaseReader->select($query, $parameters);
     }
     foreach ($records as $record) {
-        $array = array("courseSubj" => $record["fldClassSubject"], "courseNum" => $record["fldCourseNum"], "section" => $record["fldSection"]);
+        $array = array("courseSubj" => $record["fldClassSubject"], "courseNum" => $record["fldCourseNum"], "section" => $record["fldSection"], "sectionId" => $record["fnkSectionId"]);
         array_push($returnVal->classList, $array);
     }
 }
