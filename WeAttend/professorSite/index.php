@@ -15,6 +15,7 @@
               <th>Days</th>
               <th>Building</th>
               <th>Room</th>
+              <th>Taking Attendance</th>
             </tr>
           </thead>
           <tbody>
@@ -46,6 +47,14 @@
                 //Room
                 echo '<td>';
                 echo $class["fldRoom"];
+                echo '</td>';
+                //Taking attendance
+                echo '<td>';
+                if($class["fldTakeAttendance"] == 1){
+                  echo 'Yes';
+                } else {
+                  echo 'No';
+                }
                 echo '</td>';
                 echo '</tr>';
               }

@@ -6,7 +6,7 @@
  * if the netId belong to a student, it will output this student's name, and class list
 */
 
-include LIB_PATH . '/Connect-With-Database.php';
+include 'Connect-With-Database.php';
 
 // get student/faculty status of netid
 function LDAPstatus($uvmID) {
@@ -54,13 +54,13 @@ function LDAPstatus($uvmID) {
 }
 
 $USER_NET_ID = htmlentities($_SERVER["REMOTE_USER"], ENT_QUOTES, "UTF-8");
-$USER_NET_ID = 'rerickso';
+$USER_NET_ID = 'ceskalka';
 $USER_STATUS = LDAPstatus($USER_NET_ID);
 
 $CLASS_LIST = array();
 $query = "SELECT tblCourse.pmkCourseId, tblSections.pmkSectionId, tblCourse.fldClassSubject,"
           ." tblCourse.fldCourseNum, tblSections.fldSection, tblSections.fldStart, tblSections.fldEnd,"
-          ." tblSections.fldDays, tblLocation.fldBuildingArea, tblLocation.fldRoom"
+          ." tblSections.fldDays, tblLocation.fldBuildingArea, tblLocation.fldRoom, tblSections.fldTakeAttendance"
           ." FROM tblCourse JOIN tblSections ON tblCourse.pmkCourseId = tblSections.fnkCourseId"
           ." JOIN tblLocation ON tblLocation.pmkLocationId = tblSections.fnkLocationId WHERE tblSections.fldTeacherNetId = ?";
 $parameters = array($USER_NET_ID);
