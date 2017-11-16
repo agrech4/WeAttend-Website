@@ -22,17 +22,54 @@
                   . '</form>';
             exit;
           }
-
+          if (isset($_POST['submit'])) {
+            include 'scripts/getAttendance.php';
+          }
         ?>
       </h1>
+      <?php
+        if (isset($_POST['submit'])) {
+          echo '<h3>Attendance for ' . date('M j, Y',strtotime($date)) . '</h3>
+          <div class="table-responsive">
+            <table class="table table-striped table-bordered">
+              <thead>
+                <tr>
+                  <th>Student</th>
+                  <th>Time In</th>
+                  <th>Time Out</th>
+                  <th>Total Time</th>
+                  <th>Attendance</th>
+                </tr>
+              </thead>
+              <tbody>';
+          foreach ($attendance as $student) {
+            echo '<tr>';
+            echo '<td>' . $student['fnkStuNetId'] . '</td>';
+            echo '<td>' . date('G:i',strtotime($student['fldTimeIn'])) . '</td>';
+            echo '<td>' . date('G:i',strtotime($student['fldTimeOut'])) . '</td>';
+            echo '<td>' . $student['fldTimeInClass'] . ' min</td>';
+            echo '<td>';
+            if ($student['fldAttend']) {
+              echo 'Yes';
+            } else {
+              echo 'No';
+            }
+            echo '</td>';
+            echo '</tr>';
+          }
+          echo '</tbody>
+              </table>
+            </div>';
+        }
+      ?>
       <!--Get Attendence Form-->
-      <form class="form-inline" action=<?php echo '"scripts/getAttendance.php?sectionId='. urlencode($sectionId). '"'?> method="POST">
-        <h3>Attendance:</h3>
+      <form class="form-inline" action=<?php echo '"class.php?sectionId='. urlencode($sectionKey). '"'?> method="POST">
+        <h3>Get Attendance:</h3>
         <div class="input-group">
           <span class="input-group-addon">Date:</span>
           <input type="date" name="attendanceDate" class="form-control">
           <div class="input-group-btn">
-            <button class="btn btn-primary" name="submitAttend" type="submit">Submit</button>
+            <button class="btn btn-primary" name="submit" type="submit">Submit</button>
           </div>
         </div>
       </form>

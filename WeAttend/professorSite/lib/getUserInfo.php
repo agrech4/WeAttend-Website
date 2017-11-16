@@ -69,7 +69,6 @@ if ($thisDatabaseReader->querySecurityOk($query, 1, 0, 0, 0, 0)) {
     $query = $thisDatabaseReader->sanitizeQuery($query);
     $records = $thisDatabaseReader->select($query, $parameters);
 }
-echo '<!-- got here -->';
 foreach($records as $key => $class) {
   $CLASS_LIST[$class['pmkSectionId']] = $class;
 }

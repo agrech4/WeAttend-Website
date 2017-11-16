@@ -7,7 +7,7 @@
     <div class="container-fluid">
       <h1>Class List</h1>
       <div class="table-responsive">
-        <table class="table">
+        <table class="table table-striped table-bordered">
           <thead>
             <tr>
               <th>Class</th>
