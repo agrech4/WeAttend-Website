@@ -9,8 +9,9 @@ define('ADMIN_EMAIL', get_current_user() . '@uvm.edu');
 
 define('LINE_BREAK', '\n');
 
+//This breaks things
 // sanitize the server global variable
-$_SERVER = filter_input_array(INPUT_SERVER, FILTER_SANITIZE_STRING);
+//$_SERVER = filter_input_array(INPUT_SERVER, FILTER_SANITIZE_STRING);
 
 // sanatize GET global variables
 if (!empty($_GET)) {

@@ -22,13 +22,13 @@
                   . '</form>';
             exit;
           }
-          if (isset($_POST['submit'])) {
+          if (isset($_POST['submitGetAttend'])) {
             include 'scripts/getAttendance.php';
           }
         ?>
       </h1>
       <?php
-        if (isset($_POST['submit'])) {
+        if (isset($_POST['submitGetAttend'])) {
           echo '<h3>Attendance for ' . date('M j, Y',strtotime($date)) . '</h3>
           <div class="table-responsive">
             <table class="table table-striped table-bordered">
@@ -69,7 +69,7 @@
           <span class="input-group-addon">Date:</span>
           <input type="date" name="attendanceDate" class="form-control">
           <div class="input-group-btn">
-            <button class="btn btn-primary" name="submit" type="submit">Submit</button>
+            <button class="btn btn-primary" name="submitGetAttend" type="submit">Submit</button>
           </div>
         </div>
       </form>
