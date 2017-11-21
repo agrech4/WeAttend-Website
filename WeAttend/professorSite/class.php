@@ -23,26 +23,28 @@
             exit;
           }
           if (isset($_POST['submitGetAttend'])) {
+            include 'scripts/updateAttendance.php';
             include 'scripts/getAttendance.php';
           }
         ?>
       </h1>
       <?php
         if (isset($_POST['submitGetAttend'])) {
+          $fileName = $CLASS_LIST[$sectionKey]['fldClassSubject'] . sprintf("%'.03d",$CLASS_LIST[$sectionKey]['fldCourseNum'])
+                      . $CLASS_LIST[$sectionKey]['fldSection'] . '_' . $date . '.csv';
+          $tableHeaders = array('Student','Time In','Time Out','Total Time','Attendance');
           echo '<h3>Attendance for ' . date('M j, Y',strtotime($date)) . '</h3>
           <div class="table-responsive">
             <table class="table table-striped table-bordered">
               <thead>
-                <tr>
-                  <th>Student</th>
-                  <th>Time In</th>
-                  <th>Time Out</th>
-                  <th>Total Time</th>
-                  <th>Attendance</th>
-                </tr>
+                <tr>';
+          foreach ($tableHeaders as $header) {
+            echo '<th>' . $header . '</th>';
+          }
+          echo '</tr>
               </thead>
               <tbody>';
-          foreach ($attendance as $student) {
+          foreach ($stuAttendance as $student) {
             echo '<tr>';
             echo '<td>' . $student['fnkStuNetId'] . '</td>';
             echo '<td>' . date('G:i',strtotime($student['fldTimeIn'])) . '</td>';
@@ -59,7 +61,10 @@
           }
           echo '</tbody>
               </table>
-            </div>';
+            </div>
+            <a class="btn btn-primary" role="button" target="_blank" href="scripts/download.php?'
+            . http_build_query(array('fileName' => $fileName, 'headers' => $tableHeaders, 'attendanceRecords' =>$stuAttendance))
+            . '">Download</a>';
         }
       ?>
       <!--Get Attendence Form-->
@@ -79,12 +84,8 @@
         <div class="input-group">
           <span class="input-group-addon">Student NetID:</span>
           <input type="text" name="studentId" class="form-control" placeholder="jdoe">
-        </div>
-        <div class="input-group">
           <span class="input-group-addon">Date:</span>
           <input type="date" name="attendanceDate" class="form-control">
-        </div>
-        <div class="input-group">
           <div class="input-group-btn">
             <button class="btn btn-primary" name="submit" type="submit">Submit</button>
           </div>
