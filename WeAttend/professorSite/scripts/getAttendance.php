@@ -13,10 +13,4 @@
   }
   $stuAttendance = $records;
 
-  if (isset($_POST['download'])) {
-    header('Refresh: 5; URL=scripts/download.php');
-    // <META HTTP-EQUIV="Refresh" CONTENT="5; URL=/download.php">
-
-
-  }
 ?>
