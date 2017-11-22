@@ -1,16 +1,5 @@
 <?php
 
-include '../header.php';
-include '../nav.php';
-
-//setup database connection
-include '../lib/constants.php';
-include '../' . LIB_PATH . '/Connect-With-Database.php';
-
-if (isset($_POST["submit"]) and isset($_GET['sectionId'])) {
-
-  $sectionId = (int) htmlentities($_GET["sectionId"], ENT_QUOTES, "UTF-8");
-
   $timeInOutQuery = "SELECT fldStart, fldEnd FROM tblSections WHERE pmkSectionId = " . $sectionId . ";";
 //  $records = $thisDatabaseWriter->testSecurityQuery($timeInOutQuery, 1, 0, 0, 0, 1);
 
@@ -45,14 +34,13 @@ if (isset($_POST["submit"]) and isset($_GET['sectionId'])) {
   }
 
   if (!$records) {
-    echo "<script type=\"text/javascript\">
- 					alert(\"Error recording attendance.\");
- 					window.location = \"../class.php?sectionId=" . urlencode($sectionId) . "\"
- 					</script>";
+    $success = false;
+    $type = 'danger';
+    $message = 'Something went wrong.';
   } else {
-    echo "<script type=\"text/javascript\">
- 					alert(\"Manual Attendance has been recorded.\");
- 					window.location = \"../class.php?sectionId=" . urlencode($sectionId) . "\"
- 					</script>";
+    $success = true;
+    $type = 'success';
+    $message = 'Success!';
   }
-}
+
+?>

@@ -1,16 +1,5 @@
 <?php
 
-include '../header.php';
-include '../nav.php';
-
-//setup database connection
-include '../lib/constants.php';
-include '../' . LIB_PATH . '/Connect-With-Database.php';
-
-if (isset($_POST["submit"]) and isset($_GET['sectionId'])) {
-
-  $sectionId = (int) htmlentities($_GET["sectionId"], ENT_QUOTES, "UTF-8");
-
   $filename = $_FILES["Upload"]["tmp_name"];
   $netidCol = 10;
 
@@ -46,18 +35,14 @@ if (isset($_POST["submit"]) and isset($_GET['sectionId'])) {
 //      $insertQuery = $thisDatabaseWriter->sanitizeQuery($insertQuery);
       $records = $thisDatabaseWriter->insert($insertQuery, $parameter);
     }
-    if (!$records) {
-      print($insertQuery);
-      echo "<script type=\"text/javascript\">
-            alert(\"Invalid File:Please Upload CSV File.\");
-					  window.location = \"../class.php?sectionId=" . urlencode($sectionId) . "\"
-					  </script>";
-    } else {
-      echo "<script type=\"text/javascript\">
-					  alert(\"CSV File has been successfully imported.\");
-					  window.location = \"../class.php?sectionId=" . urlencode($sectionId) . "\"
-					  </script>";
-    }
     fclose($file);
+    if (!$records) {
+      $success = false;
+      $type = 'danger';
+      $message = 'Something went wrong.';
+    } else {
+      $success = true;
+      $type = 'success';
+      $message = 'Success! Students added to roster.';
+    }
   }
-}

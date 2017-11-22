@@ -6,7 +6,7 @@
  * if the netId belong to a student, it will output this student's name, and class list
 */
 
-include 'Connect-With-Database.php';
+// include_once 'Connect-With-Database.php';
 
 // get student/faculty status of netid
 function LDAPstatus($uvmID) {

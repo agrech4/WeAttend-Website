@@ -1,13 +1,9 @@
 <?php
 
-include '../header.php';
-include '../nav.php';
-
 //setup database connection
-include '../lib/constants.php';
-include '../' . LIB_PATH . '/Connect-With-Database.php';
+// include_once '../' . LIB_PATH . '/Connect-With-Database.php';
 
-if (isset($_POST["submit"]) and isset($_GET['sectionId'])) {
+// if (isset($_POST["submit"]) and isset($_GET['sectionId'])) {
 
   $sectionId = htmlentities($_GET["sectionId"], ENT_QUOTES, "UTF-8");
 
@@ -27,16 +23,16 @@ if (isset($_POST["submit"]) and isset($_GET['sectionId'])) {
   if ($thisDatabaseWriter->querySecurityOk($toggleAttendanceQuery, 1, 0, 0, 0, 0)) {
     $records = $thisDatabaseWriter->insert($toggleAttendanceQuery, $parameters);
   }
-
-  if(!$records){
-    echo "<script type=\"text/javascript\">
- 					alert(\"Something went wrong.\");
- 					window.location = \"../class.php?sectionId=" . urlencode($sectionId) . "\"
- 					</script>";
-  } else{
-    echo "<script type=\"text/javascript\">
- 					alert(\"Attendance has been turned " . $turn . ".\");
- 					window.location = \"../class.php?sectionId=" . urlencode($sectionId) . "\"
- 					</script>";
-  }
-}
+  // 
+  // if(!$records){
+  //   echo "<script type=\"text/javascript\">
+ 	// 				alert(\"Something went wrong.\");
+ 	// 				window.location = \"../class.php?sectionId=" . urlencode($sectionId) . "\"
+ 	// 				</script>";
+  // } else{
+  //   echo "<script type=\"text/javascript\">
+ 	// 				alert(\"Attendance has been turned " . $turn . ".\");
+ 	// 				window.location = \"../class.php?sectionId=" . urlencode($sectionId) . "\"
+ 	// 				</script>";
+  // }
+// }
