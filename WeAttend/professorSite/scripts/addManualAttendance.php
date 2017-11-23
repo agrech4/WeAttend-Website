@@ -36,11 +36,11 @@
   if (!$records) {
     $success = false;
     $type = 'danger';
-    $message = 'Something went wrong.';
+    $message = 'Attendance was not recorded. Please try again.';
   } else {
     $success = true;
     $type = 'success';
-    $message = 'Success!';
+    $message = 'Success! Attendance has been recorded.';
   }
 
 ?>

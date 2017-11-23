@@ -14,7 +14,7 @@
   if (!isset($records)) {
     $success = false;
     $type = 'danger';
-    $message = 'Something went wrong.';
+    $message = 'Could not get attendance data. Pleeade try again.';
   } elseif (empty($records)) {
     $success = false;
     $type = 'warning';
@@ -22,7 +22,7 @@
   } else {
     $success = true;
     $type = 'success';
-    $message = 'Success!';
+    $message = 'Success! Loaded attendance for ' . date('M j, Y',strtotime($date)) . '.';
     $stuAttendance = $records;
   }
 ?>

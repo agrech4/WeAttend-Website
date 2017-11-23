@@ -106,7 +106,7 @@
         <div class="input-group">
           <label class="input-group-btn">
             <span class="btn btn-default">
-              Browse&hellip; <input type="file" name="Upload" id="Upload" style="display:none;" onchange="$('#upload-file-info').val($(this).val());">
+              Browse&hellip; <input type="file" name="Upload" id="Upload" style="display:none;" onchange="$('#upload-file-info').val((($(this).val()).split('\\')).pop());">
             </span>
           </label>
           <input type="text" class="form-control" id="upload-file-info" readonly>
