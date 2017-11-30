@@ -1,10 +1,11 @@
 <?php
+$fileName = $_FILES["Upload"]["tmp_name"];
+$netidCol = 10;
+$fileType = pathinfo($fileName,PATHINFO_EXTENSION);
 
-  $filename = $_FILES["Upload"]["tmp_name"];
-  $netidCol = 10;
-
+if($fileType == 'txt' || $fileType == 'csv') {
   if ($_FILES["Upload"]["size"] > 0) {
-    $file = fopen($filename, "r");
+    $file = fopen($fileName, "r");
     if (($cols = fgetcsv($file, 10000, ",")) !== FALSE) {
       $colNum = -1;
       foreach ($cols as $col) {
@@ -46,3 +47,8 @@
       $message = 'Success! Students added to roster.';
     }
   }
+} else {
+  $success = false;
+  $type = 'warning';
+  $message = 'File was not of correct type. Please only upload .csv or .txt files';
+}
