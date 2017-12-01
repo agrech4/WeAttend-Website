@@ -28,5 +28,5 @@ if($check) {
     $records = $thisDatabaseWriter->insert($insertQuery, $parameter);
   }
 }
-
+unset($records);
 ?>

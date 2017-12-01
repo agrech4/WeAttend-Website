@@ -72,4 +72,5 @@ if ($thisDatabaseReader->querySecurityOk($query, 1, 0, 0, 0, 0)) {
 foreach($records as $key => $class) {
   $CLASS_LIST[$class['pmkSectionId']] = $class;
 }
+unset($records);
 ?>

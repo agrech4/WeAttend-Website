@@ -23,7 +23,8 @@
   if ($thisDatabaseWriter->querySecurityOk($toggleAttendanceQuery, 1, 0, 0, 0, 0)) {
     $records = $thisDatabaseWriter->insert($toggleAttendanceQuery, $parameters);
   }
-  // 
+  unset($records);
+  //
   // if(!$records){
   //   echo "<script type=\"text/javascript\">
  	// 				alert(\"Something went wrong.\");

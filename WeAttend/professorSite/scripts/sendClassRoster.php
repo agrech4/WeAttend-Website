@@ -1,9 +1,9 @@
 <?php
 $fileName = $_FILES["Upload"]["tmp_name"];
-$netidCol = 10;
-$fileType = pathinfo($fileName,PATHINFO_EXTENSION);
+$fileType = pathinfo($_FILES["Upload"]["name"],PATHINFO_EXTENSION);
 
 if($fileType == 'txt' || $fileType == 'csv') {
+
   if ($_FILES["Upload"]["size"] > 0) {
     $file = fopen($fileName, "r");
     if (($cols = fgetcsv($file, 10000, ",")) !== FALSE) {
@@ -15,36 +15,46 @@ if($fileType == 'txt' || $fileType == 'csv') {
         }
       }
     }
-
-    while (($getData = fgetcsv($file, 10000, ",")) !== FALSE) {
-      $netIDarray[] = $getData[$netidCol];
-    }
-
-    $insertQuery = "INSERT INTO tblStudentSection (fnkSectionId, fldStuNetId) VALUES ";
-    $netIdSize = sizeof($netIDarray);
-    for ($i = 0; $i < $netIdSize; $i++) {
-      while ($i !== $netIdSize - 1) {
-        $insertQuery .= "(" . $sectionId . ",'" . $netIDarray[$i] . "'), ";
-        $i++;
+    if (isset($netidCol)) {
+      while (($getData = fgetcsv($file, 10000, ",")) !== FALSE) {
+        $netIDarray[] = $getData[$netidCol];
       }
-    }
-    $insertQuery .= "(" . $sectionId . ", '" . $netIDarray[$netIdSize - 1] . "');";
 
-    $parameter = array();
-//    $records = $thisDatabaseWriter->testSecurityQuery($insertQuery, $netIDarray);
-    if ($thisDatabaseWriter->querySecurityOk($insertQuery, 0, 0, 8, 0, 1)) {
-//      $insertQuery = $thisDatabaseWriter->sanitizeQuery($insertQuery);
-      $records = $thisDatabaseWriter->insert($insertQuery, $parameter);
-    }
-    fclose($file);
-    if (!$records) {
-      $success = false;
-      $type = 'danger';
-      $message = 'Something went wrong.';
+
+      $insertQuery = "INSERT INTO tblStudentSection (fnkSectionId, fldStuNetId) VALUES ";
+      $netIdSize = sizeof($netIDarray);
+      for ($i = 0; $i < $netIdSize; $i++) {
+        while ($i !== $netIdSize - 1) {
+          $insertQuery .= "(" . $sectionId . ",'" . $netIDarray[$i] . "'), ";
+          $i++;
+        }
+      }
+      $insertQuery .= "(" . $sectionId . ", '" . $netIDarray[$netIdSize - 1] . "');";
+
+      $parameter = array();
+      $thisDatabaseWriter->testSecurityQuery($insertQuery, 0, 0, 2*$netIdSize, 0, 1);
+      if ($thisDatabaseWriter->querySecurityOk($insertQuery, 0, 0, 2*$netIdSize, 0, 1)) {
+        $deleteQuery = "DELETE FROM tblStudentSection WHERE tblStudentSection.fnkSectionId = " . $sectionId;
+        if ($thisDatabaseWriter->querySecurityOk($deleteQuery, 1, 0, 0, 0, 0)) {
+          $delRecords = $thisDatabaseWriter->delete($deleteQuery, $parameter);
+        }
+        $records = $thisDatabaseWriter->insert($insertQuery, $parameter);
+      }
+      fclose($file);
+      if (!$records) {
+        $success = false;
+        $type = 'danger';
+        $message = 'Something went wrong. Please try again.';
+      } else {
+        $success = true;
+        $type = 'success';
+        $message = 'Success! Student roster updated.';
+      }
+      unset($records);
     } else {
-      $success = true;
-      $type = 'success';
-      $message = 'Success! Students added to roster.';
+      $success = false;
+      $type = 'warning';
+      $message = 'File is not formatted correctly.';
     }
   }
 } else {
@@ -52,3 +62,4 @@ if($fileType == 'txt' || $fileType == 'csv') {
   $type = 'warning';
   $message = 'File was not of correct type. Please only upload .csv or .txt files';
 }
+?>
