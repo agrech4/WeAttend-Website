@@ -21,6 +21,9 @@
         if (isset($_POST['submitUpload'])) {
           include 'scripts/sendClassRoster.php';
         }
+        if (isset($_POST['submitRoster'])) {
+          include 'scripts/getRoster.php';
+        }
         echo '<h1>';
         echo $CLASS_LIST[$sectionId]['fldClassSubject'] . ' ' . sprintf("%'.03d",$CLASS_LIST[$sectionId]['fldCourseNum']) . ' ' .$CLASS_LIST[$sectionId]['fldSection'];
         echo '</h1>';
@@ -75,6 +78,14 @@
             . http_build_query(array('fileName' => $fileName, 'headers' => $tableHeaders, 'attendanceRecords' =>$stuAttendance))
             . '">Download</a>';
         }
+        if (isset($_POST['submitRoster']) and $success) {
+          echo '<h3>Student Roster</h3>
+                <ul class="list-group list-inline">';
+          foreach($stuRoster as $student) {
+            echo '<li class="list-group-item list-inline-item" style="width: 115px; text-align:center">' . $student['fldStuNetId'] . '</li>';
+          }
+          echo '</ul>';
+        }
       ?>
       <!--Get Attendence Form-->
       <form class="form-inline" action=<?php echo '"class.php?sectionId='. urlencode($sectionId). '"'?> method="POST">
@@ -118,8 +129,13 @@
         </div>
         <span class="help-block">Only .csv or .txt files</span>
       </form>
+      <!--Show current roster-->
+      <form class="form-inline" action<?php echo '"class.php?sectionId='. urlencode($sectionId) . '"'?> method="POST">
+        <h3>Show Current Roster:</h3>
+        <button class="btn btn-primary" name="submitRoster" type="submit">Submit</button>
+      </form>
       <!--Turn attendance off-->
-      <form "form-inline" action=<?php echo '"class.php?sectionId='. urlencode($sectionId) . '&turn=off"'?> method="POST">
+      <form class="form-inline" action=<?php echo '"class.php?sectionId='. urlencode($sectionId) . '&turn=off"'?> method="POST">
         <h3>Stop Taking Attendance:</h3>
         <button class="btn btn-primary" name="submitToggle" type="submit">Submit</button>
       </form>

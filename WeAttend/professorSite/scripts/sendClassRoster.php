@@ -32,7 +32,6 @@ if($fileType == 'txt' || $fileType == 'csv') {
       $insertQuery .= "(" . $sectionId . ", '" . $netIDarray[$netIdSize - 1] . "');";
 
       $parameter = array();
-      $thisDatabaseWriter->testSecurityQuery($insertQuery, 0, 0, 2*$netIdSize, 0, 1);
       if ($thisDatabaseWriter->querySecurityOk($insertQuery, 0, 0, 2*$netIdSize, 0, 1)) {
         $deleteQuery = "DELETE FROM tblStudentSection WHERE tblStudentSection.fnkSectionId = " . $sectionId;
         if ($thisDatabaseWriter->querySecurityOk($deleteQuery, 1, 0, 0, 0, 0)) {

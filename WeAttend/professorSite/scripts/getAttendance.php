@@ -16,7 +16,7 @@ if(!empty($_POST['attendanceDate'])){
   if (!isset($records)) {
     $success = false;
     $type = 'danger';
-    $message = 'Could not get attendance data. Pleeade try again.';
+    $message = 'Could not get attendance data. Please try again.';
   } elseif (empty($records)) {
     $success = false;
     $type = 'warning';
