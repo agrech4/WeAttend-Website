@@ -25,25 +25,50 @@ if (!empty($_POST["studentId"]) and !empty($_POST["attendanceDate"])){
       $timeIn = $timeInOut[0][0];
       $timeOut = $timeInOut[0][1];
 
-      $insertQuery = "INSERT INTO tblClassAttendance (fldDate, fldTimeInClass, fldTimeIn, fldTimeOut, fldAttend, fnkSectionId, fnkStuNetId)"
-                      . " VALUES ('" . $date . "', " . "TIME_TO_SEC(TIMEDIFF('" . $timeOut . "','" . $timeIn . "'))/" . 60 . ", '" . $timeIn . "', '"
-                      . $timeOut . "', " . 1 . ", " . $sectionId . ", '" . $stuNetId . "');" ;
-      $parameter = array();
-      if ($thisDatabaseWriter->querySecurityOk($insertQuery, 0, 0, 12, 0, 1)) {
-        $insertQuery = $thisDatabaseWriter->sanitizeQuery($insertQuery, false, true, true);
-        $records = $thisDatabaseWriter->insert($insertQuery, $parameter);
+      $checkAttendanceQuery = 'SELECT pmkAttendanceId, fldAttend FROM tblClassAttendance '
+                            . 'WHERE fnkStuNetId = "' . $stuNetId . '" AND fldDate = DATE("' . $date . '") '
+                            . 'AND fldTimeIn > DATE_ADD(TIME("' . $timeIn . '"), INTERVAL -1 HOUR) '
+                            . 'AND fldTimeIn < TIME("' . $timeOut . '")';
+                            $parameter = array();
+      if ($thisDatabaseReader->querySecurityOk($checkAttendanceQuery, 1, 3, 8, 2, 0)) {
+        $checkAttendanceQuery = $thisDatabaseReader->sanitizeQuery($checkAttendanceQuery, false, false, true);
+        $currentAttendances = $thisDatabaseReader->select($checkAttendanceQuery, $parameter);
+      }
+      $alreadyRecorded = false;
+      foreach ($currentAttendances as $attendance) {
+        if($attendance['fldAttend'] == 1) {
+          $alreadyRecorded = true;
+        }
       }
 
-      if (!$records) {
-        $success = false;
-        $type = 'danger';
-        $message = 'Attendance was not recorded. Please try again.';
+
+      if(!$alreadyRecorded) {
+
+
+        $insertQuery = "INSERT INTO tblClassAttendance (fldDate, fldTimeInClass, fldTimeIn, fldTimeOut, fldAttend, fnkSectionId, fnkStuNetId)"
+                        . " VALUES ('" . $date . "', " . "TIME_TO_SEC(TIMEDIFF('" . $timeOut . "','" . $timeIn . "'))/" . 60 . ", '" . $timeIn . "', '"
+                        . $timeOut . "', " . 1 . ", " . $sectionId . ", '" . $stuNetId . "')" ;
+        $parameter = array();
+        if ($thisDatabaseWriter->querySecurityOk($insertQuery, 0, 0, 12, 0, 0)) {
+          $insertQuery = $thisDatabaseWriter->sanitizeQuery($insertQuery, false, false, true);
+          $records = $thisDatabaseWriter->insert($insertQuery, $parameter);
+        }
+
+        if (!$records) {
+          $success = false;
+          $type = 'danger';
+          $message = 'Attendance was not recorded. Please try again.';
+        } else {
+          $success = true;
+          $type = 'success';
+          $message = 'Success! Attendance has been recorded.';
+        }
+        unset($records);
       } else {
-        $success = true;
-        $type = 'success';
-        $message = 'Success! Attendance has been recorded.';
+        $success = false;
+        $type = 'warning';
+        $message = 'Attendance has already been recorded for ' . $stuNetId . ' on ' . date('M j, Y',strtotime($date));
       }
-      unset($records);
     } else {
       $success = false;
       $type = 'warning';
