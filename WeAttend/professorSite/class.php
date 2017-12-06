@@ -60,7 +60,7 @@
             echo '<tr>';
             echo '<td>' . $student['fnkStuNetId'] . '</td>';
             echo '<td>' . date('G:i',strtotime($student['fldTimeIn'])) . '</td>';
-            echo '<td>' . date('G:i',strtotime($student['fldTimeOut'])) . '</td>';
+            echo '<td>' . (!empty($student['fldTimeOut'])?date('G:i',strtotime($student['fldTimeOut'])):'--') . '</td>';
             echo '<td>' . $student['fldTimeInClass'] . ' min</td>';
             echo '<td>';
             if ($student['fldAttend']) {

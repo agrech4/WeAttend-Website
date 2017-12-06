@@ -28,9 +28,9 @@ if (!empty($_POST["studentId"]) and !empty($_POST["attendanceDate"])){
       $checkAttendanceQuery = 'SELECT pmkAttendanceId, fldAttend FROM tblClassAttendance '
                             . 'WHERE fnkStuNetId = "' . $stuNetId . '" AND fldDate = DATE("' . $date . '") '
                             . 'AND fldTimeIn > DATE_ADD(TIME("' . $timeIn . '"), INTERVAL -1 HOUR) '
-                            . 'AND fldTimeIn < TIME("' . $timeOut . '")';
+                            . 'AND fldTimeIn < TIME("' . $timeOut . '") AND fnkSectionId = ' . $sectionId;
                             $parameter = array();
-      if ($thisDatabaseReader->querySecurityOk($checkAttendanceQuery, 1, 3, 8, 2, 0)) {
+      if ($thisDatabaseReader->querySecurityOk($checkAttendanceQuery, 1, 4, 8, 2, 0)) {
         $checkAttendanceQuery = $thisDatabaseReader->sanitizeQuery($checkAttendanceQuery, false, false, true);
         $currentAttendances = $thisDatabaseReader->select($checkAttendanceQuery, $parameter);
       }
@@ -38,16 +38,25 @@ if (!empty($_POST["studentId"]) and !empty($_POST["attendanceDate"])){
       foreach ($currentAttendances as $attendance) {
         if($attendance['fldAttend'] == 1) {
           $alreadyRecorded = true;
+          $maxId = $attendance['pmkAttendanceId'];
         }
       }
 
-
       if(!$alreadyRecorded) {
 
+        $deleteQuery = '';
+        foreach ($currentAttendances as $attendance) {
+          $deleteQuery .= 'DELETE FROM tblClassAttendance WHERE pmkAttendanceId = ' . $attendance['pmkAttendanceId'] . ';';
+        }
+        $parameter = array();
+        $thisDatabaseWriter->testSecurityQuery($deleteQuery,sizeof($currentAttendances), 0, 0, 0, sizeof($currentAttendances));
+        if ($thisDatabaseWriter->querySecurityOk($deleteQuery,sizeof($currentAttendances), 0, 0, 0, sizeof($currentAttendances))) {
+          $deleted = $thisDatabaseWriter->delete($deleteQuery, $parameter);
+        }
 
-        $insertQuery = "INSERT INTO tblClassAttendance (fldDate, fldTimeInClass, fldTimeIn, fldTimeOut, fldAttend, fnkSectionId, fnkStuNetId)"
-                        . " VALUES ('" . $date . "', " . "TIME_TO_SEC(TIMEDIFF('" . $timeOut . "','" . $timeIn . "'))/" . 60 . ", '" . $timeIn . "', '"
-                        . $timeOut . "', " . 1 . ", " . $sectionId . ", '" . $stuNetId . "')" ;
+        $insertQuery = 'INSERT INTO tblClassAttendance (fldDate, fldTimeInClass, fldTimeIn, fldTimeOut, fldAttend, fnkSectionId, fnkStuNetId) '
+                        . 'VALUES ("' . $date . '", ' . 'TIME_TO_SEC(TIMEDIFF("' . $timeOut . '","' . $timeIn . '"))/' . 60 . ', "' . $timeIn . '", "'
+                        . $timeOut . '", ' . 1 . ', ' . $sectionId . ', "' . $stuNetId . '")' ;
         $parameter = array();
         if ($thisDatabaseWriter->querySecurityOk($insertQuery, 0, 0, 12, 0, 0)) {
           $insertQuery = $thisDatabaseWriter->sanitizeQuery($insertQuery, false, false, true);
@@ -65,6 +74,18 @@ if (!empty($_POST["studentId"]) and !empty($_POST["attendanceDate"])){
         }
         unset($records);
       } else {
+
+        $deleteQuery = '';
+        foreach ($currentAttendances as $attendance) {
+          if($attendance['pmkAttendanceId'] != $maxId) {
+            $deleteQuery .= 'DELETE FROM tblClassAttendance WHERE pmkAttendanceId = ' . $attendance['pmkAttendanceId'] . ';';
+          }
+        }
+        $parameter = array();
+        if ($thisDatabaseWriter->querySecurityOk($deleteQuery,sizeof($currentAttendances)-1, 0, 0, 0, sizeof($currentAttendances)-1)) {
+          $deleted = $thisDatabaseWriter->delete($deleteQuery, $parameter);
+        }
+
         $success = false;
         $type = 'warning';
         $message = 'Attendance has already been recorded for ' . $stuNetId . ' on ' . date('M j, Y',strtotime($date));
