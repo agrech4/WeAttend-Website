@@ -4,7 +4,7 @@ if (!empty($_POST["studentId"]) and !empty($_POST["attendanceDate"])){
   $stuNetId = $_POST["studentId"];
   $date = $_POST["attendanceDate"];
 
-  if(ctype_lower($stuNetId)) {
+  if(ctype_alnum($stuNetId)) {
 
     $rosterCheckQuery = 'SELECT * FROM tblStudentSection WHERE fldStuNetId = "' . $stuNetId . '"';
     if ($thisDatabaseReader->querySecurityOk($rosterCheckQuery, 1, 0, 2, 0, 0)) {
@@ -49,7 +49,6 @@ if (!empty($_POST["studentId"]) and !empty($_POST["attendanceDate"])){
           $deleteQuery .= 'DELETE FROM tblClassAttendance WHERE pmkAttendanceId = ' . $attendance['pmkAttendanceId'] . ';';
         }
         $parameter = array();
-        $thisDatabaseWriter->testSecurityQuery($deleteQuery,sizeof($currentAttendances), 0, 0, 0, sizeof($currentAttendances));
         if ($thisDatabaseWriter->querySecurityOk($deleteQuery,sizeof($currentAttendances), 0, 0, 0, sizeof($currentAttendances))) {
           $deleted = $thisDatabaseWriter->delete($deleteQuery, $parameter);
         }
