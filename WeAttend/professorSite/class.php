@@ -55,7 +55,7 @@
         echo '<tr>';
         echo '<td>' . $student['fnkStuNetId'] . '</td>';
         // echo '<td>' . date('G:i',strtotime($student['fldTimeIn'])) . '</td>';
-        echo '<td>' . date('G:i',(strtotime($student['fldTimeOut']) - 60*$student['fldTimeInClass'])) . '</td>';
+        echo '<td>' . (!empty($student['fldTimeOut'])?date('G:i',(strtotime($student['fldTimeOut']) - 60*$student['fldTimeInClass'])):date('G:i',strtotime($student['fldTimeIn']))) . '</td>';
         echo '<td>' . (!empty($student['fldTimeOut'])?date('G:i',strtotime($student['fldTimeOut'])):'--') . '</td>';
         echo '<td>' . $student['fldTimeInClass'] . ' min</td>';
         echo '<td>';
