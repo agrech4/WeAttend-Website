@@ -1,3 +1,4 @@
+<html lang="en" style="height: 100%">
 <head>
   <title>WeAttend</title>
   <!-- Required meta tags -->
@@ -26,3 +27,5 @@
     }
   ?>
 </head>
+<body style="height: 100%">
+<div style="position: relative; min-height: 100%">
