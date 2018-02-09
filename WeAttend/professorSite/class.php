@@ -88,7 +88,7 @@
     <h3>Get Attendance:</h3>
     <div class="input-group">
       <span class="input-group-addon">Date:</span>
-      <input type="date" name="attendanceDate" class="form-control">
+      <input type="date" name="attendanceDate" class="form-control" placeholder="mm/dd/yyyy">
       <div class="input-group-btn">
         <button class="btn btn-primary" name="submitGetAttend" type="submit">Submit</button>
       </div>
@@ -101,7 +101,7 @@
       <span class="input-group-addon">Student NetID:</span>
       <input type="text" name="studentId" class="form-control" placeholder="jdoe">
       <span class="input-group-addon">Date:</span>
-      <input type="date" name="attendanceDate" class="form-control">
+      <input type="date" name="attendanceDate" class="form-control" placeholder="mm/dd/yyyy">
       <div class="input-group-btn">
         <button class="btn btn-primary" name="submitManAttend" type="submit">Submit</button>
       </div>
