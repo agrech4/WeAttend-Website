@@ -28,8 +28,16 @@ $identifier = "";
 if (isset($_GET["identifier"])) {
     $identifier = htmlentities($_GET["identifier"], ENT_QUOTES, "UTF-8");
 }
-$date = getdate();
-$time = $date["hours"] . ":" . $date["minutes"] . ":" . $date["seconds"];
+$time = "";
+if (isset($_GET["time"])) {
+    $time = htmlentities($_GET["time"], ENT_QUOTES, "UTF-8");
+}
+$date = "";
+if (isset($_GET["date"])) {
+    $date = htmlentities($_GET["date"], ENT_QUOTES, "UTF-8");
+}
+$weekday = date(“l”, strtotime($date));
+
 $weekday = $date["weekday"];
 switch ($weekday) {
     case "Monday":
@@ -65,8 +73,8 @@ if (isset($_GET["status"])) {
 
 $class = array();
 
-// get this student's class which start within 1 hour or before current time
-// and the end time is after current time.
+// get this student's class which start within 1 hour or before current time 
+// and the end time is after current time. 
 $getClassQuery = "SELECT tblSections.pmkSectionId, tblSections.fldStart, tblSections.fldEnd, "
 		. "tblClassAttendance.fldTimeIn, tblClassAttendance.fldTimeOut, "
         . "tblClassAttendance.pmkAttendanceId, tblClassAttendance.pmkAttendanceId "
@@ -87,7 +95,7 @@ $getClassQuery = "SELECT tblSections.pmkSectionId, tblSections.fldStart, tblSect
         . "AND tblBeaconLoc.fldMinor = " . $minor . " ";
 $parameters = array();
 
-$thisDatabaseReader->testSecurityQuery($getClassQuery, 1, 9, 8, 2, 0);
+//$class = $thisDatabaseReader->testSecurityQuery($getClassQuery, 1, 9, 12, 2, 0);
 if ($thisDatabaseReader->querySecurityOk($getClassQuery, 1, 9, 8, 2, 0)) {
     $class = $thisDatabaseReader->select($getClassQuery, $parameters);
 }
@@ -97,13 +105,11 @@ if ($class[0]["pmkSectionId"]) {
     $classSectionId = $class[0]["pmkSectionId"];
     if ($class[0][pmkAttendanceId]) {
         if($status == "checkIn") {
-
             $updateQuery = "UPDATE tblClassAttendance SET tblClassAttendance.fldTimeIn = NOW(),"
                     . " tblClassAttendance.fldTimeOut = NULL "
                     . "WHERE tblClassAttendance.pmkAttendanceId = " . $class[0][pmkAttendanceId];
 
             $updateQueryParameters = array();
-            $thisDatabaseReader->testSecurityQuery($updateQuery, 1, 0, 0, 0, 0);
             if ($thisDatabaseWriter->querySecurityOk($updateQuery, 1, 0, 0, 0, 0)) {
                 $checkInResult = $thisDatabaseWriter->insert($updateQuery, $updateQueryParameters);
             }
@@ -140,7 +146,7 @@ if ($class[0]["pmkSectionId"]) {
             if ($thisDatabaseWriter->querySecurityOk($insertQuery1, 0, 0, 10, 0, 0)) {
                 $checkInResult = $thisDatabaseWriter->insert($insertQuery1, $insertQueryParameters1);
             }
-
+            
         }
     }
 

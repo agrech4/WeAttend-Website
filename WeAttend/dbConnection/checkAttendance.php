@@ -14,11 +14,6 @@ if (isset($_GET["sectionId"])) {
     $sectionId = htmlentities($_GET["sectionId"], ENT_QUOTES, "UTF-8");
 }
 
-//$sectionId = '';
-//if (isset($_GET["sectionId"])) {
-//    $netId = htmlentities($_GET["sectionId"], ENT_QUOTES, "UTF-8");
-//}
-
 $startDate = '';
 if (isset($_GET["startDate"])) {
     $startDate = htmlentities($_GET["startDate"], ENT_QUOTES, "UTF-8");
@@ -29,6 +24,7 @@ if (isset($_GET["endDate"])) {
     $endDate = htmlentities($_GET["endDate"], ENT_QUOTES, "UTF-8");
 }
 
+// get the time when student enter and exit the classroom
 $selectAttendQuery = 'SELECT tblClassAttendance.fldDate, tblClassAttendance.fldTimeIn, '
         . 'tblClassAttendance.fldTimeOut, tblClassAttendance.fldAttend '
         . 'FROM tblClassAttendance '
@@ -40,6 +36,7 @@ $parameters = array();
 if ($thisDatabaseReader->querySecurityOk($selectAttendQuery, 1, 3, 6, 2, 0)) {
     $records = $thisDatabaseReader->select($selectAttendQuery, $parameters);
 }
+
 $returnVal->history = array();
 foreach ($records as $record) {
     $array = array("date" => $record["fldDate"], "timeIn" => $record["fldTimeIn"], "timeOut" => $record["fldTimeOut"], "attend" => $record["fldAttend"]);
