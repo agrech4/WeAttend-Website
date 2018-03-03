@@ -60,14 +60,14 @@ if (isset($_GET["status"])) {
     $status = htmlentities($_GET["status"], ENT_QUOTES, "UTF-8");
 }
 
-//TODO testing only 
+//TODO testing only
 $weekday = "M";
 // check if student
 $class = array();
 
-// get this student's class which start within one hour or before current time 
-// and the end time is after current time. 
-// get 
+// get this student's class which start within one hour or before current time
+// and the end time is after current time.
+// get
 $getClassQuery = "SELECT tblSections.pmkSectionId, tblClassAttendance.fldTimeIn, tblClassAttendance.fldTimeOut, "
         . "tblClassAttendance.pmkAttendanceId, tblClassAttendance.pmkAttendanceId "
         . "FROM tblSections "
@@ -103,11 +103,11 @@ if ($class[0]["pmkSectionId"]) {
     if ($class[0][pmkAttendanceId]) {
         if($status == "checkIn") {
             $updateQuery = "UPDATE tblClassAttendance SET tblClassAttendance.fldTimeIn = NOW(),"
-                    . " tblClassAttendance.fldTimeOut = 'NULL' "
+                    . " tblClassAttendance.fldTimeOut = NULL "
                     . "WHERE tblClassAttendance.pmkAttendanceId = " . $class[0][pmkAttendanceId];
 
             $updateQueryParameters = array();
-            if ($thisDatabaseWriter->querySecurityOk($updateQuery, 1, 0, 2, 0, 0)) {
+            if ($thisDatabaseWriter->querySecurityOk($updateQuery, 1, 0, 0, 0, 0)) {
                 $class = $thisDatabaseWriter->insert($updateQuery, $updateQueryParameters);
             }
         }
