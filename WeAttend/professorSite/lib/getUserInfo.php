@@ -54,7 +54,7 @@ function LDAPstatus($uvmID) {
 }
 
 $USER_NET_ID = htmlentities($_SERVER["REMOTE_USER"], ENT_QUOTES, "UTF-8");
-$USER_NET_ID = 'ceskalka';
+$USER_NET_ID = 'weattend';
 $USER_STATUS = LDAPstatus($USER_NET_ID);
 
 $CLASS_LIST = array();

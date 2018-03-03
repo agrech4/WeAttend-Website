@@ -39,7 +39,7 @@
     if (isset($_POST['submitGetAttend']) and $success) {
       $fileName = $CLASS_LIST[$sectionId]['fldClassSubject'] . sprintf("%'.03d",$CLASS_LIST[$sectionId]['fldCourseNum'])
                   . $CLASS_LIST[$sectionId]['fldSection'] . '_' . $date . '.csv';
-      $tableHeaders = array('Student','Time In','Time Out','Total Time','Attendance');
+      $tableHeaders = array('Student','Last Time In','Last Time Out','Total Time','Present');
       echo '<h3>Attendance for ' . date('M j, Y',strtotime($date)) . '</h3>
       <div class="table-responsive">
         <table class="table table-striped table-bordered">
@@ -55,7 +55,7 @@
         echo '<tr>';
         echo '<td>' . $student['fnkStuNetId'] . '</td>';
         // echo '<td>' . date('G:i',strtotime($student['fldTimeIn'])) . '</td>';
-        echo '<td>' . (!empty($student['fldTimeOut'])?date('G:i',(strtotime($student['fldTimeOut']) - 60*$student['fldTimeInClass'])):date('G:i',strtotime($student['fldTimeIn']))) . '</td>';
+        echo '<td>' . (!empty($student['fldTimeIn'])?date('G:i',strtotime($student['fldTimeIn'])):'--') . '</td>';
         echo '<td>' . (!empty($student['fldTimeOut'])?date('G:i',strtotime($student['fldTimeOut'])):'--') . '</td>';
         echo '<td>' . $student['fldTimeInClass'] . ' min</td>';
         echo '<td>';
