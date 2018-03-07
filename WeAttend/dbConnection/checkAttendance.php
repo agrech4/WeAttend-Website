@@ -3,6 +3,8 @@
 //setup database connection
 include 'lib/constants.php';
 include LIB_PATH . '/Connect-With-Database.php';
+//updates database attendance records
+include 'updateAttendance.php';
 
 $netId = '';
 if (isset($_GET["netId"])) {
