@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * Author: Alex Grech IV (alexiv42@gmail.com)
+ * This file updates the database with manual attendance for a student on a date. 
+*/
+
 if (!empty($_POST["studentId"]) and !empty($_POST["attendanceDate"])){
 
   $stuNetId = $_POST["studentId"];

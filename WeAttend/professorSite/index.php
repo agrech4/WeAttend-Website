@@ -1,5 +1,12 @@
 <!DOCTYPE html>
 <?php
+
+/**
+ * Author: Alex Grech IV (alexiv42@gmail.com)
+ * This file displays all of the classes that the instructor is currently teaching
+ * with links to those class pages.
+*/
+
   include 'header.php';
   include 'nav.php';
 ?>

@@ -1,11 +1,23 @@
 <!DOCTYPE html>
 <?php
+
+/**
+ * Author: Alex Grech IV (alexiv42@gmail.com)
+ * This file shows forms for the selected class, which allow the following:
+ * Showing attendance data for a specific date;
+ * Adding manual attendance for a student on a date;
+ * Upload a student roster;
+ * View current roster;
+ * Toggle whether or not attendance is being taken for the given class.
+*/
+
   include 'header.php';
   include 'nav.php';
 ?>
 <div class="container" style="padding-bottom: 10em">
   <?php
     $sectionId = $_GET["sectionId"];
+    // check which php scripts to include
     if (isset($_POST['submitGetAttend'])) {
       include 'scripts/updateAttendance.php';
       include 'scripts/getAttendance.php';
@@ -19,9 +31,11 @@
     if (isset($_POST['submitRoster'])) {
       include 'scripts/getRoster.php';
     }
+    // Prints out class info
     echo '<h1>';
     echo $CLASS_LIST[$sectionId]['fldClassSubject'] . ' ' . sprintf("%'.03d",$CLASS_LIST[$sectionId]['fldCourseNum']) . ' ' .$CLASS_LIST[$sectionId]['fldSection'];
     echo '</h1>';
+    // Page if attendance is not being taken for the chosen class
     if ($CLASS_LIST[$sectionId]['fldTakeAttendance'] == 0) {
       echo '<h2>You are not currently taking attendance for this class</h2>';
       echo '<form "form-inline" action="class.php?sectionId='
@@ -30,12 +44,14 @@
             . '</form>';
       exit;
     }
+    // Print Out Feedback Message
     if (isset($message)){
       echo '<div class="alert alert-' . $type . ' alert-dismissable">
               <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'
               . $message .
             '</div>';
     }
+    // Print Out Attendance Data
     if (isset($_POST['submitGetAttend']) and $success) {
       $fileName = $CLASS_LIST[$sectionId]['fldClassSubject'] . sprintf("%'.03d",$CLASS_LIST[$sectionId]['fldCourseNum'])
                   . $CLASS_LIST[$sectionId]['fldSection'] . '_' . $date . '.csv';
@@ -54,7 +70,6 @@
       foreach ($stuAttendance as $student) {
         echo '<tr>';
         echo '<td>' . $student['fnkStuNetId'] . '</td>';
-        // echo '<td>' . date('G:i',strtotime($student['fldTimeIn'])) . '</td>';
         echo '<td>' . (!empty($student['fldTimeIn'])?date('G:i',strtotime($student['fldTimeIn'])):'--') . '</td>';
         echo '<td>' . (!empty($student['fldTimeOut'])?date('G:i',strtotime($student['fldTimeOut'])):'--') . '</td>';
         echo '<td>' . $student['fldTimeInClass'] . ' min</td>';
@@ -74,6 +89,7 @@
         . http_build_query(array('fileName' => $fileName, 'headers' => $tableHeaders, 'attendanceRecords' =>$stuAttendance))
         . '">Download</a>';
     }
+    // Print out Student Roster
     if (isset($_POST['submitRoster']) and $success) {
       echo '<h3>Student Roster</h3>
             <ul class="list-group list-inline">';

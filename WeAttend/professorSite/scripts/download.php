@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * Author: Alex Grech IV (alexiv42@gmail.com)
+ * This file downloads an array of student attendance information as a csv.
+*/
+
   error_reporting(E_ALL);
   ini_set('display_errors', 1);
   $fileName = $_GET['fileName'];

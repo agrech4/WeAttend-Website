@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * Author: Alex Grech IV (alexiv42@gmail.com)
+ * This file updates the attendance records to so that the attendance field
+ * reflects whether or not the student has fullfilled the requirements for attendance.
+*/
+
 $query = 'SELECT tblClassAttendance.pmkAttendanceId, tblClassAttendance.fldTimeInClass, '
           . 'tblSections.fldStart, tblSections.fldEnd '
           . 'FROM tblClassAttendance JOIN tblSections ON tblClassAttendance.fnkSectionId = tblSections.pmkSectionId '

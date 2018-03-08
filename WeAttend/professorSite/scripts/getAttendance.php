@@ -1,4 +1,11 @@
 <?php
+
+/**
+ * Author: Alex Grech IV (alexiv42@gmail.com)
+ * This file retrieves attendance information from the database of a class on a
+ * certain date.
+*/
+
 if(!empty($_POST['attendanceDate'])){
   $date = $_POST['attendanceDate'];
 

@@ -1,4 +1,11 @@
 <?php
+
+/**
+ * Author: Alex Grech IV (alexiv42@gmail.com)
+ * This file takes a csv or text file and uses it to populate the student roster
+ * for a class on the database.
+*/
+
 $fileName = $_FILES["Upload"]["tmp_name"];
 $fileType = pathinfo($_FILES["Upload"]["name"],PATHINFO_EXTENSION);
 

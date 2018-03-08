@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * Author: Alex Grech IV (alexiv42@gmail.com)
+ * This file retrieves the student roster for a class from the database.
+*/
+
 $selectRosterQuery = 'SELECT tblStudentSection.fldStuNetId FROM tblStudentSection '
                     . 'WHERE tblStudentSection.fnkSectionId = ' . $sectionId;
 $parameters = array();

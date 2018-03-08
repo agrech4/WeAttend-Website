@@ -1,9 +1,9 @@
 <?php
 
-//setup database connection
-// include_once '../' . LIB_PATH . '/Connect-With-Database.php';
-
-// if (isset($_POST["submit"]) and isset($_GET['sectionId'])) {
+/**
+ * Author: Alex Grech IV (alexiv42@gmail.com)
+ * This file toggles whether or not attendance is being taken for this class.
+*/
 
   $sectionId = htmlentities($_GET["sectionId"], ENT_QUOTES, "UTF-8");
 
