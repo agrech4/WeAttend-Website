@@ -68,6 +68,20 @@
           </thead>
           <tbody>';
       foreach ($stuAttendance as $student) {
+        //fix time in class if the time out field is empty
+        if (!empty($student['fldTimeIn'])) {
+          if (empty($student['fldTimeOut'])) {
+            $today = date_create('now');
+            $classEndTime = new DateTime();
+            date_timestamp_set($classEndTime, strtotime($CLASS_LIST[$sectionId]['fldEnd'],strtotime($date)));
+            if ($today > $classEndTime) {
+              $student['fldTimeOut'] = $CLASS_LIST[$sectionId]['fldEnd'];
+              $student['fldTimeInClass'] += round((strtotime($CLASS_LIST[$sectionId]['fldEnd']) - strtotime($student['fldTimeIn']))/60);
+            } else {
+              $student['fldTimeInClass'] += round((time() - strtotime($student['fldTimeIn']))/60);
+            }
+          }
+        }
         echo '<tr>';
         echo '<td>' . $student['fnkStuNetId'] . '</td>';
         echo '<td>' . (!empty($student['fldTimeIn'])?date('G:i',strtotime($student['fldTimeIn'])):'--') . '</td>';
