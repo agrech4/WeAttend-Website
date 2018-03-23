@@ -87,7 +87,6 @@
                 $student['fldTimeInClass'] += ((floor(strtotime($CLASS_LIST[$sectionId]['fldEnd'])/60)) - (floor(strtotime($CLASS_LIST[$sectionId]['fldStart'])/60)));
               }
             } elseif ($now > $classStartTime) {
-              $student['fldTimeInClass'] += ((floor(time()/60)) - (floor(strtotime($student['fldTimeIn'])/60)));
               if ($timeIn > $classStartTime) {
                 $student['fldTimeInClass'] += ((floor(time()/60)) - (floor(strtotime($student['fldTimeIn'])/60)));
               } else {
@@ -131,6 +130,11 @@
           //     $student['fldTimeInClass'] = $classTime;
           //   }
           // }
+        }
+        if (!$student['fldAttend']) {
+          if ($student['fldTimeInClass'] > (.75*(strtotime($CLASS_LIST[$sectionId]['fldEnd']) - strtotime($CLASS_LIST[$sectionId]['fldStart']))/60)) {
+            $student['fldAttend'] = True;
+          }
         }
         if (!$skip) {
           echo '<tr>';

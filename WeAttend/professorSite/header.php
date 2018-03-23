@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <meta name="author" content="Wellness Environment">
+  <meta name="author" content="Wellness Environment WeAttend Team">
   <meta name="description" content="Attendance portal for WeAttend">
 
   <!-- Bootstrap CSS -->

@@ -87,11 +87,9 @@ $getClassQuery = "SELECT tblSections.pmkSectionId, tblSections.fldStart, tblSect
         . "AND tblBeaconLoc.fldMinor = " . $minor . " ";
 $parameters = array();
 
-$thisDatabaseReader->testSecurityQuery($getClassQuery, 1, 9, 8, 2, 0);
 if ($thisDatabaseReader->querySecurityOk($getClassQuery, 1, 9, 8, 2, 0)) {
     $class = $thisDatabaseReader->select($getClassQuery, $parameters);
 }
-
 
 if ($class[0]["pmkSectionId"]) {
     $classSectionId = $class[0]["pmkSectionId"];
@@ -103,7 +101,6 @@ if ($class[0]["pmkSectionId"]) {
                     . "WHERE tblClassAttendance.pmkAttendanceId = " . $class[0][pmkAttendanceId];
 
             $updateQueryParameters = array();
-            $thisDatabaseReader->testSecurityQuery($updateQuery, 1, 0, 0, 0, 0);
             if ($thisDatabaseWriter->querySecurityOk($updateQuery, 1, 0, 0, 0, 0)) {
                 $checkInResult = $thisDatabaseWriter->insert($updateQuery, $updateQueryParameters);
             }
@@ -143,12 +140,11 @@ if ($class[0]["pmkSectionId"]) {
 
         }
     }
-
+  }
     if($checkInResult != 1){
         $returnVal->updateDB = "false";
     }else{
         $returnVal->updateDB = "true";
     }
     echo json_encode($returnVal);
-}
 ?>
