@@ -17,19 +17,19 @@
 <div class="container" style="padding-bottom: 10em">
   <?php
     $sectionId = $_GET["sectionId"];
-    // check which php scripts to include
+    // check which php files to include
     if (isset($_POST['submitGetAttend'])) {
-      include 'scripts/updateAttendance.php';
-      include 'scripts/getAttendance.php';
+      include 'php/updateAttendance.php';
+      include 'php/getAttendance.php';
     }
     if (isset($_POST['submitManAttend'])) {
-      include 'scripts/addManualAttendance.php';
+      include 'php/addManualAttendance.php';
     }
     if (isset($_POST['submitUpload'])) {
-      include 'scripts/sendClassRoster.php';
+      include 'php/sendClassRoster.php';
     }
     if (isset($_POST['submitRoster'])) {
-      include 'scripts/getRoster.php';
+      include 'php/getRoster.php';
     }
     // Prints out class info
     echo '<h1>';
@@ -68,7 +68,8 @@
           </thead>
           <tbody>';
       foreach ($stuAttendance as $student) {
-        //fix time in class if the time out field is empty
+        //fix bad data from the database
+        $skip = False;
         $now = date_create('now');
         $classEndTime = new DateTime();
         date_timestamp_set($classEndTime, strtotime($CLASS_LIST[$sectionId]['fldEnd'],strtotime($date)));
@@ -85,8 +86,21 @@
               } else {
                 $student['fldTimeInClass'] += ((floor(strtotime($CLASS_LIST[$sectionId]['fldEnd'])/60)) - (floor(strtotime($CLASS_LIST[$sectionId]['fldStart'])/60)));
               }
-            } else {
+            } elseif ($now > $classStartTime) {
               $student['fldTimeInClass'] += ((floor(time()/60)) - (floor(strtotime($student['fldTimeIn'])/60)));
+              if ($timeIn > $classStartTime) {
+                $student['fldTimeInClass'] += ((floor(time()/60)) - (floor(strtotime($student['fldTimeIn'])/60)));
+              } else {
+                $student['fldTimeInClass'] += ((floor(time()/60)) - (floor(strtotime($CLASS_LIST[$sectionId]['fldStart'])/60)));
+              }
+            } else {
+              $skip = True;
+            }
+          } else {
+            $timeOut = new DateTime();
+            date_timestamp_set($timeOut, strtotime($student['fldTimeOut'],strtotime($date)));
+            if ($timeOut < $classStartTime) {
+              $skip = True;
             }
           }
           if ($timeIn < $classStartTime) {
@@ -96,9 +110,13 @@
           if (!empty($student['fldTimeOut'])) {
             $timeOut = new DateTime();
             date_timestamp_set($timeOut, strtotime($student['fldTimeOut'],strtotime($date)));
-            if ($now > $classStartTime && $timeOut > $classStartTime) {
+            if ($timeOut > $classStartTime) {
               $student['fldTimeIn'] = $CLASS_LIST[$sectionId]['fldStart'];
+            } else {
+              $skip = True;
             }
+          } else {
+            $skip = True;
           }
         }
         if (!empty($student['fldTimeOut'])) {
@@ -107,31 +125,33 @@
           if ($timeOut > $classEndTime) {
             $student['fldTimeOut'] = $CLASS_LIST[$sectionId]['fldEnd'];
           }
-          if (!empty($student['fldTimeIn'])) {
-            $classTime = ((floor(strtotime($student['fldTimeOut'])/60)) - (floor(strtotime($student['fldTimeIn'])/60)));
-            if ($classTime > $student['fldTimeInClass']) {
-              $student['fldTimeInClass'] = $classTime;
-            }
+          // if (!empty($student['fldTimeIn'])) {
+          //   $classTime = ((floor(strtotime($student['fldTimeOut'])/60)) - (floor(strtotime($student['fldTimeIn'])/60)));
+          //   if ($classTime > $student['fldTimeInClass']) {
+          //     $student['fldTimeInClass'] = $classTime;
+          //   }
+          // }
+        }
+        if (!$skip) {
+          echo '<tr>';
+          echo '<td>' . $student['fnkStuNetId'] . '</td>';
+          echo '<td>' . (!empty($student['fldTimeIn'])?date('G:i',strtotime($student['fldTimeIn'])):'--') . '</td>';
+          echo '<td>' . (!empty($student['fldTimeOut'])?date('G:i',strtotime($student['fldTimeOut'])):'--') . '</td>';
+          echo '<td>' . $student['fldTimeInClass'] . ' min</td>';
+          echo '<td>';
+          if ($student['fldAttend']) {
+            echo 'Yes';
+          } else {
+            echo 'No';
           }
+          echo '</td>';
+          echo '</tr>';
         }
-        echo '<tr>';
-        echo '<td>' . $student['fnkStuNetId'] . '</td>';
-        echo '<td>' . (!empty($student['fldTimeIn'])?date('G:i',strtotime($student['fldTimeIn'])):'--') . '</td>';
-        echo '<td>' . (!empty($student['fldTimeOut'])?date('G:i',strtotime($student['fldTimeOut'])):'--') . '</td>';
-        echo '<td>' . $student['fldTimeInClass'] . ' min</td>';
-        echo '<td>';
-        if ($student['fldAttend']) {
-          echo 'Yes';
-        } else {
-          echo 'No';
-        }
-        echo '</td>';
-        echo '</tr>';
       }
       echo '</tbody>
           </table>
         </div>
-        <a class="btn btn-primary" role="button" target="_blank" href="scripts/download.php?'
+        <a class="btn btn-primary" role="button" target="_blank" href="php/download.php?'
         . http_build_query(array('fileName' => $fileName, 'headers' => $tableHeaders, 'attendanceRecords' =>$stuAttendance))
         . '">Download</a>';
     }

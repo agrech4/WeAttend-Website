@@ -3,7 +3,7 @@
   $parentFolder = end(explode("/",$PATH_PARTS['dirname']));
   echo "<!--" . $parentFolder . "-->";
   $homeDir = "";
-  if($parentFolder == "scripts") {
+  if($parentFolder == "php") {
     $homeDir = "../";
   }
 ?>
