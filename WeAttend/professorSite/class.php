@@ -69,16 +69,48 @@
           <tbody>';
       foreach ($stuAttendance as $student) {
         //fix time in class if the time out field is empty
+        $now = date_create('now');
+        $classEndTime = new DateTime();
+        date_timestamp_set($classEndTime, strtotime($CLASS_LIST[$sectionId]['fldEnd'],strtotime($date)));
+        $classStartTime = new DateTime();
+        date_timestamp_set($classStartTime, strtotime($CLASS_LIST[$sectionId]['fldStart'],strtotime($date)));
         if (!empty($student['fldTimeIn'])) {
+          $timeIn = new DateTime();
+          date_timestamp_set($timeIn, strtotime($student['fldTimeIn'],strtotime($date)));
           if (empty($student['fldTimeOut'])) {
-            $today = date_create('now');
-            $classEndTime = new DateTime();
-            date_timestamp_set($classEndTime, strtotime($CLASS_LIST[$sectionId]['fldEnd'],strtotime($date)));
-            if ($today > $classEndTime) {
+            if ($now > $classEndTime) {
               $student['fldTimeOut'] = $CLASS_LIST[$sectionId]['fldEnd'];
-              $student['fldTimeInClass'] += round((strtotime($CLASS_LIST[$sectionId]['fldEnd']) - strtotime($student['fldTimeIn']))/60);
+              if ($timeIn > $classStartTime) {
+                $student['fldTimeInClass'] += ((floor(strtotime($CLASS_LIST[$sectionId]['fldEnd'])/60)) - (floor(strtotime($student['fldTimeIn'])/60)));
+              } else {
+                $student['fldTimeInClass'] += ((floor(strtotime($CLASS_LIST[$sectionId]['fldEnd'])/60)) - (floor(strtotime($CLASS_LIST[$sectionId]['fldStart'])/60)));
+              }
             } else {
-              $student['fldTimeInClass'] += round((time() - strtotime($student['fldTimeIn']))/60);
+              $student['fldTimeInClass'] += ((floor(time()/60)) - (floor(strtotime($student['fldTimeIn'])/60)));
+            }
+          }
+          if ($timeIn < $classStartTime) {
+            $student['fldTimeIn'] = $CLASS_LIST[$sectionId]['fldStart'];
+          }
+        } else {
+          if (!empty($student['fldTimeOut'])) {
+            $timeOut = new DateTime();
+            date_timestamp_set($timeOut, strtotime($student['fldTimeOut'],strtotime($date)));
+            if ($now > $classStartTime && $timeOut > $classStartTime) {
+              $student['fldTimeIn'] = $CLASS_LIST[$sectionId]['fldStart'];
+            }
+          }
+        }
+        if (!empty($student['fldTimeOut'])) {
+          $timeOut = new DateTime();
+          date_timestamp_set($timeOut, strtotime($student['fldTimeOut'],strtotime($date)));
+          if ($timeOut > $classEndTime) {
+            $student['fldTimeOut'] = $CLASS_LIST[$sectionId]['fldEnd'];
+          }
+          if (!empty($student['fldTimeIn'])) {
+            $classTime = ((floor(strtotime($student['fldTimeOut'])/60)) - (floor(strtotime($student['fldTimeIn'])/60)));
+            if ($classTime > $student['fldTimeInClass']) {
+              $student['fldTimeInClass'] = $classTime;
             }
           }
         }
