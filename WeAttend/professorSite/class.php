@@ -124,12 +124,6 @@
           if ($timeOut > $classEndTime) {
             $student['fldTimeOut'] = $CLASS_LIST[$sectionId]['fldEnd'];
           }
-          // if (!empty($student['fldTimeIn'])) {
-          //   $classTime = ((floor(strtotime($student['fldTimeOut'])/60)) - (floor(strtotime($student['fldTimeIn'])/60)));
-          //   if ($classTime > $student['fldTimeInClass']) {
-          //     $student['fldTimeInClass'] = $classTime;
-          //   }
-          // }
         }
         if (!$student['fldAttend']) {
           if ($student['fldTimeInClass'] > (.75*(strtotime($CLASS_LIST[$sectionId]['fldEnd']) - strtotime($CLASS_LIST[$sectionId]['fldStart']))/60)) {
@@ -223,3 +217,6 @@
 <?php
   include 'footer.php';
 ?>
+
+
+<?php //I'm sorry to whoever has to figure out what is going on on this page ?>
